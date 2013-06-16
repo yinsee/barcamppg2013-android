@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.barcamppenang2013;
+package com.barcamppenang2013.tabfragment;
+
+import com.barcamppenang2013.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-    public class UpdateProfileFragment extends Fragment {
+    public class ProfileFragment extends Fragment implements TabInterface {
+    	public static final String TITLE = "Profile";
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,15 @@ import android.view.ViewGroup;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.update_profile_page, container, false);
+            View v = inflater.inflate(R.layout.dummy_page, container, false);
             return v;
+        }
+        
+        /* (non-Javadoc)
+		 * @see com.barcamppenang2013.TabInterface#printTitle()
+		 */
+        @Override
+		public String printTitle(){
+        	return ProfileFragment.TITLE;
         }
     }
