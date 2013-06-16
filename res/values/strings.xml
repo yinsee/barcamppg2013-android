@@ -4,7 +4,10 @@
     <string name="app_name">Bar Camp Penang 2013</string>
     <string name="action_settings">Settings</string>
     <string name="info_string">This is the Info Page.</string>
-    <string name="friend_string">This is the Friend Page.</string>
-    <string name="update_profile_string">This is the Update Profile Page.</string>
+    <string name="home_string">Homepage</string>
+    <string name="dummy_string"> Please Fill Up This Page! :)</string>
+    <string name="github_label">SlidingMenu on GitHub</string>
+    <string name="github">GitHub</string>
+    <string name="changing_fragments">Changing Fragments</string>
     
 </resources>
