@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- The frame layout is used to prevent mysterious black area that appear on sliding menu after using map api v2, solution is found on SO: --> 
+<!-- http://stackoverflow.com/questions/13837697/viewpager-with-google-maps-api-v2-mysterious-black-view -->
 
-<!-- <TextView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/text_info"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center_vertical|center_horizontal"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/info_string"/> -->
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/map"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:name="com.google.android.gms.maps.SupportMapFragment"/>
-    
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent" />
+
+</FrameLayout>
