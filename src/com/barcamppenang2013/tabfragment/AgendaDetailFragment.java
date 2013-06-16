@@ -14,25 +14,33 @@
  * limitations under the License.
  */
 
-package com.barcamppenang2013;
+package com.barcamppenang2013.tabfragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import com.barcamppenang2013.R;
 
-    public class FriendFragment extends Fragment {
-
+    public class AgendaDetailFragment extends Fragment implements TabInterface {
+    	public static final String TITLE = "Slot Detail";
+    	private TextView mTextView;
         @Override
         public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+            super.onCreate(savedInstanceState);            
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.friend_page, container, false);
-            return v;
+        	mTextView = (TextView)inflater.inflate(R.layout.dummy_page, container, false);
+            return mTextView;
+        }
+
+        @Override
+        public String printTitle(){
+        	return AgendaDetailFragment.TITLE;
         }
     }
