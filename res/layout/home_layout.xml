@@ -1,7 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/text_friend"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center_vertical|center_horizontal"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/home_string"/>
+    <FrameLayout
+        android:id="@+id/home_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+
+
+        <LinearLayout
+            android:id="@+id/home_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.barcamppenang2013.tabfragment.MapFragment" />
+            <!--
+             <ImageView
+            android:id="@+id/home_barcamp_logo"
+            android:layout_width="match_parent"
+            android:layout_height="240px"
+            android:adjustViewBounds="true"
+            android:background="@drawable/colorful"
+            android:scaleType="centerCrop" />
+            -->
+
+            <ImageView
+                android:id="@+id/home_barcamp_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/info_countdown" />
+
+            <TextView
+                android:id="@+id/count_down"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/home_string" />
+
+            <ImageView
+                android:id="@+id/home_barcamp_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="50dip"
+                android:layout_weight="1"
+                android:src="@drawable/barcamp_logo" />
+        </LinearLayout>
+    </FrameLayout>
+
+</ScrollView><!--
+      android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="50dip"
+-->

@@ -24,6 +24,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.barcamppenang2013.R;
@@ -34,20 +36,24 @@ import com.barcamppenang2013.R;
     	private TextView mTextView;
         @Override
         public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);            
+            super.onCreate(savedInstanceState);
+            
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-        	mTextView = (TextView)inflater.inflate(R.layout.home_layout, container, false);
-        	mTextView.setBackgroundResource(R.drawable.barcamp_poster);
+        	ScrollView scrollView = (ScrollView)inflater.inflate(R.layout.home_layout, container, false);
+        	FrameLayout linearLayout = (FrameLayout)scrollView.findViewById(R.id.home_linear_layout); 
+        	 //linearLayout.setBackgroundColor(Color.WHITE);
+        	 mTextView = (TextView)linearLayout.findViewById(R.id.count_down);
+        	//mTextView.setBackgroundResource(R.drawable.info_countdown);
             Date date = new  Date(113, 6, 26); // 2013/July/26
             // year 	the year, 0 is 1900.
             // month 	the month, 0 - 11.
             // day 	the day of the month, 1 - 31.
             long dtMili = System.currentTimeMillis();  
-            Date dateNow = new Date(dtMili);  
+            Date dateNow = new Date(dtMili);
             long remain = date.getTime() - dateNow.getTime();  
 
             new CountDownTimer(remain, 1000) {
@@ -62,7 +68,7 @@ import com.barcamppenang2013.R;
                 }
              }.start();
 
-            return mTextView;
+            return scrollView;
         }
         public String timeCalculate(long ttime)   
         {  
