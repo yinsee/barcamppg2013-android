@@ -1,4 +1,3 @@
-//Oasdasdasdas
 package com.barcamppenang2013;
 
 import java.io.FileNotFoundException;
@@ -21,40 +20,37 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
-import android.view.View;
+import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.barcamppenang2013.tabfragment.AgendaFragment;
 import com.barcamppenang2013.tabfragment.BadgeFragment;
 import com.barcamppenang2013.tabfragment.HomeFragment;
 import com.barcamppenang2013.tabfragment.MapFragment;
-import com.barcamppenang2013.tabfragment.ProfileFragment;
 import com.barcamppenang2013.tabfragment.TabInterface;
 
 public class MainActivity extends SherlockFragmentActivity {
 
 	private Fragment fragment;
-	private View mMenuFrame;
 	private String mUrl = "https://docs.google.com/spreadsheet/pub?key=0AhLn4HpbOY9JdEJqVTBFNU5MaHdHMGRuMDFIcEVxX3c&output=html";
 	private final static int REFRESH_MENU_ID = 0x1234;
     private FragmentTabHost mTabHost;
-
-//	public MainActivity() {
-//		super(R.string.changing_fragments);
-//	}
-
+    private final static String HOME_TAB = "Home";
+    private final static String MAP_TAB = "Map";
+    private final static String AGENDA_TAB = "Agenda";
+    
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// set the Above View
-		if (savedInstanceState != null) {
-			fragment = getSupportFragmentManager().getFragment(
-					savedInstanceState, "fragment");
-			updateActionBarTitle(fragment);
-		}
+//		if (savedInstanceState != null) {
+//			fragment = getSupportFragmentManager().getFragment(
+//					savedInstanceState, "fragment");
+//			updateActionBarTitle(fragment);
+//		}
 		if (fragment == null) {
 			fragment = new HomeFragment();
 			updateActionBarTitle(fragment);
@@ -64,37 +60,20 @@ public class MainActivity extends SherlockFragmentActivity {
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("Home").setIndicator("Home"),
+        mTabHost.addTab(mTabHost.newTabSpec(HOME_TAB).setIndicator(HOME_TAB),
         		HomeFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("Map").setIndicator("Map"),
+        mTabHost.addTab(mTabHost.newTabSpec(MAP_TAB).setIndicator(MAP_TAB),
         		MapFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("Friends").setIndicator("Friends"),
-        		AgendaFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("Update Profiles").setIndicator("Update Profiles"),
+        mTabHost.addTab(mTabHost.newTabSpec(AGENDA_TAB).setIndicator(AGENDA_TAB),
         		BadgeFragment.class, null);
-       
-        
-		// set the Above View
-//		setContentView(R.layout.content_frame);
-//		getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.content_frame, fragment).commit();
-//
-//		// set the Behind View
-//		setBehindContentView(R.layout.sliding_menu_frame);
-//		mMenuFrame = findViewById(R.id.menu_frame);
-//		mMenuFrame.setBackgroundColor(Color.WHITE);
-//		getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.menu_frame, new SlidingTabMenu()).commit();
-//
-//		// customize the SlidingMenu
-//		SlidingMenu mSlidingMenu = getSlidingMenu();
-//		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-//		mSlidingMenu.setBehindWidth(400);
-//		
-//		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.CYAN));
-////        BitmapDrawable bg = (BitmapDrawable)getResources().getDrawable(R.drawable.bg_striped);
-////        bg.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
-////        getSupportActionBar().setBackgroundDrawable(bg);
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+        	
+        @Override
+        public void onTabChanged(String tabId) {
+            ActionBar actionBar = getSupportActionBar();
+    		actionBar.setTitle(tabId);
+        }
+       	});
 	}
 
 	@Override
@@ -122,21 +101,16 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		// getSupportFragmentManager().putFragment(outState, "fragment",
-		// fragment);
 	}
 
 	public void switchContent(Fragment fragment) {
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, fragment).commit();
-		//getSlidingMenu().showContent();
 		updateActionBarTitle(fragment);
 	}
 
 	public void updateActionBarTitle(Fragment fragment) {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle(((TabInterface) fragment).printTitle());
-		actionBar.setIcon(R.drawable.ic_action_github);
+//		actionBar.setIcon(R.drawable.ic_action_github);
 	}
 
 	@Override
@@ -189,7 +163,6 @@ public class MainActivity extends SherlockFragmentActivity {
 				ClientProtocolException, IOException {
 			String htmlBody = null;
 			try {
-
 				HttpGet request = new HttpGet();
 				HttpClient client = new DefaultHttpClient();
 
