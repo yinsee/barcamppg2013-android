@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -41,6 +42,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.barcamppenang2013.tabfragment.AgendaFragment;
+import com.barcamppenang2013.tabfragment.FriendListFragment;
 import com.barcamppenang2013.tabfragment.HomeFragment;
 import com.barcamppenang2013.tabfragment.ProfileFragment;
 import com.barcamppenang2013.tabfragment.TabInterface;
@@ -58,7 +60,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	private final static String PROFILE_TAB = "Profile";
 	private final static String AGENDA_TAB = "Agenda";
 	private final static String FRIENDS_TAB = "Friends";
-	
+	private Bundle friendBundle= new Bundle();
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,7 +113,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		ImageView imageView4 = new ImageView(this); 
 		imageView4.setImageResource(R.drawable.tab_friends_front);
 		imageView4.setBackgroundResource(R.drawable.tab_friends_back);
-		mTabHost.addTab(mTabHost.newTabSpec(INFO_TAB).setIndicator(imageView4),HomeFragment.class, null);
+		mTabHost.addTab(mTabHost.newTabSpec(FRIENDS_TAB).setIndicator(imageView4),FriendListFragment.class, null);
 		
 		
 		mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -187,13 +190,39 @@ public class MainActivity extends SherlockFragmentActivity {
 				.commit();
 		updateActionBarTitle(fragment);
 	}
+	public void switchFragmentPassBundle(Fragment switchToFragment, String tag) {
 
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		//friendEditFrag = new FriendEditFragment();
+		switchToFragment.setArguments(friendBundle);
+		ft.replace(R.id.realtabcontent, switchToFragment);
+		ft.addToBackStack(tag);		
+		ft.commit();
+		displayBackStack(getSupportFragmentManager());
+	}
+	public static void displayBackStack(FragmentManager fm) {
+		int count = fm.getBackStackEntryCount();
+		Log.d("Backstack log",  count + " backstack");
+		for (int i = 0; i < count; i++) {
+			// Display Backstack-entry data like
+			String name = fm.getBackStackEntryAt(i).getName();
+			Log.d("Backstack log", "backstack " + i + ": " + name);
+		}
+	}
 	public void updateActionBarTitle(Fragment fragment) {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle(((TabInterface) fragment).printTitle());
 		// actionBar.setIcon(R.drawable.ic_action_github);
 	}
-
+	public void setBundle(String id, String name,String email, String phone, String profession, String fbId){
+		//friendBundle = new Bundle();
+		friendBundle.putString("id", id);
+		friendBundle.putString("name", name);
+		friendBundle.putString("profession", profession);
+		friendBundle.putString("phone", phone);
+		friendBundle.putString("email", email);
+		friendBundle.putString("fbId", fbId);
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
