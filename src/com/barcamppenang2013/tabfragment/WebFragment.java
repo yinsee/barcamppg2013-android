@@ -33,6 +33,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.barcamppenang2013.MainActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -48,24 +50,17 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class BadgeFragment extends Fragment implements TabInterface {
+public class WebFragment extends Fragment implements TabInterface {
 	// public static final String TITLE = "Badges";
-	public static final String TITLE = "New Agenda";
+	public static final String TITLE = "InfoTrek's Location";
 	private WebView mWebView;
 	private boolean mIsWebViewAvailable;
-	// real one
-	// private String mUrl =
-	// "https://docs.google.com/spreadsheet/pub?key=0Ah8I5GkmGav8dEZlT0JxclpiMTJJMVpnUE9lSGoyUVE&output=html";
 
-	// a duplicate for testing
-
-	/**
-	 * Called to instantiate the view. Creates and returns the WebView.
-	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		((MainActivity) getActivity()).getSupportActionBar()
+		.setDisplayHomeAsUpEnabled(true);
 		if (mWebView != null) {
 			mWebView.destroy();
 		}
@@ -82,35 +77,17 @@ public class BadgeFragment extends Fragment implements TabInterface {
 			}
 
 		});
-		mWebView.setWebViewClient(new InnerWebViewClient()); // forces it to
-																// open in app
+		mWebView.setWebViewClient(new InnerWebViewClient());
+        String imageUrl =  "file:///android_asset/qb_indoor_map.png";
 
-		// mUrl = "file:///android_asset/agenda/about.html";
-		// mUrl = this.getActivity().getFilesDir()+"/agenda.html";
-		// mUrl = "file:///data/about.html";
-		// mWebView.loadUrl(mUrl);
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.loadUrl(imageUrl);
 
-		mWebView.loadData(readFromFile("agenda.html"), "text/html", "utf-8");
-		// Log.d("ddw", "outside!!");
 		mIsWebViewAvailable = true;
-		WebSettings settings = mWebView.getSettings();
-		settings.setJavaScriptEnabled(true);
+//		WebSettings settings = mWebView.getSettings();
+//		settings.setJavaScriptEnabled(true);
 		return mWebView;
 	}
-
-	/**
-	 * Convenience method for loading a url. Will fail if {@link View} is not
-	 * initialised (but won't throw an {@link Exception})
-	 * 
-	 * @param url
-	 */
-//	public void loadUrl(String url) {
-//		if (mIsWebViewAvailable)
-//			getWebView().loadUrl(mUrl = url);
-//		else
-//			Log.w("ImprovedWebViewFragment",
-//					"WebView cannot be found. Check the view and fragment have been loaded.");
-//	}
 
 	/**
 	 * Called when the fragment is visible to the user and actively running.
@@ -172,39 +149,6 @@ public class BadgeFragment extends Fragment implements TabInterface {
 
 	@Override
 	public String printTitle() {
-		return BadgeFragment.TITLE;
-	}
-
-
-
-	private String readFromFile(String fileName) {
-
-		String ret = "";
-
-		try {
-			InputStream inputStream = this.getActivity()
-					.openFileInput(fileName);
-
-			if (inputStream != null) {
-				InputStreamReader inputStreamReader = new InputStreamReader(
-						inputStream);
-				BufferedReader bufferedReader = new BufferedReader(
-						inputStreamReader);
-				String receiveString = "";
-				StringBuilder stringBuilder = new StringBuilder();
-
-				while ((receiveString = bufferedReader.readLine()) != null) {
-					stringBuilder.append(receiveString);
-				}
-
-				inputStream.close();
-				ret = stringBuilder.toString();
-			}
-		} catch (FileNotFoundException e) {
-			Log.e("login activity", "File not found: " + e.toString());
-		} catch (IOException e) {
-			Log.e("login activity", "Can not read file: " + e.toString());
-		}
-		return ret;
+		return WebFragment.TITLE;
 	}
 }
