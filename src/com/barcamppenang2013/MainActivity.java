@@ -42,6 +42,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.barcamppenang2013.tabfragment.AgendaFragment;
 import com.barcamppenang2013.tabfragment.HomeFragment;
+import com.barcamppenang2013.tabfragment.ProfileFragment;
 import com.barcamppenang2013.tabfragment.TabInterface;
 
 public class MainActivity extends SherlockFragmentActivity {
@@ -53,10 +54,11 @@ public class MainActivity extends SherlockFragmentActivity {
 	private String mUrlSponsor = "http://barcamppenang.org/partners-sponsors/";
 	private final static int REFRESH_MENU_ID = 0x1234;
 	private FragmentTabHost mTabHost;
-	private final static String HOME_TAB = "Home";
-	private final static String MAP_TAB = "Map";
+	private final static String INFO_TAB = "Info";
+	private final static String PROFILE_TAB = "Profile";
 	private final static String AGENDA_TAB = "Agenda";
-
+	private final static String FRIENDS_TAB = "Friends";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,28 +91,26 @@ public class MainActivity extends SherlockFragmentActivity {
 		Display display = getWindowManager().getDefaultDisplay();
 		int width = display.getWidth();
 		imageView1.setLayoutParams(new LinearLayout.LayoutParams((width/4),100));
-
-		
-		mTabHost.addTab(mTabHost.newTabSpec(HOME_TAB).setIndicator(imageView1),HomeFragment.class, null);
+		mTabHost.addTab(mTabHost.newTabSpec(INFO_TAB).setIndicator(imageView1),HomeFragment.class, null);
 //		mTabHost.addTab(mTabHost.newTabSpec(HOME_TAB).setIndicator("caicaiz"),HomeFragment.class, null);
 		
 		//Profile Tab
 		ImageView imageView2 = new ImageView(this);
 		imageView2.setImageResource(R.drawable.tab_profile_front);
 		imageView2.setBackgroundResource(R.drawable.tab_profile_back);
-		mTabHost.addTab(mTabHost.newTabSpec(AGENDA_TAB).setIndicator(imageView2),AgendaFragment.class, null);
+		mTabHost.addTab(mTabHost.newTabSpec(PROFILE_TAB).setIndicator(imageView2),ProfileFragment.class, null);
 		
 		//Agenda Tab
 		ImageView imageView3 = new ImageView(this);
 		imageView3.setImageResource(R.drawable.tab_agenda_front);
 		imageView3.setBackgroundResource(R.drawable.tab_agenda_back);
-		mTabHost.addTab(mTabHost.newTabSpec(HOME_TAB).setIndicator(imageView3),HomeFragment.class, null);
+		mTabHost.addTab(mTabHost.newTabSpec(AGENDA_TAB).setIndicator(imageView3),AgendaFragment.class, null);
 		
 		//Friends Tab
 		ImageView imageView4 = new ImageView(this); 
 		imageView4.setImageResource(R.drawable.tab_friends_front);
 		imageView4.setBackgroundResource(R.drawable.tab_friends_back);
-		mTabHost.addTab(mTabHost.newTabSpec(AGENDA_TAB).setIndicator(imageView4),AgendaFragment.class, null);
+		mTabHost.addTab(mTabHost.newTabSpec(INFO_TAB).setIndicator(imageView4),HomeFragment.class, null);
 		
 		
 		mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -175,7 +175,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	public void removeHomeFragment() {
 		FragmentManager fragment_manager = getSupportFragmentManager();
 		HomeFragment home_fragment = (HomeFragment) fragment_manager
-				.findFragmentByTag(HOME_TAB);
+				.findFragmentByTag(INFO_TAB);
 		if (home_fragment.isAdded()) {
 			fragment_manager.beginTransaction().remove(home_fragment).commit();
 		}
