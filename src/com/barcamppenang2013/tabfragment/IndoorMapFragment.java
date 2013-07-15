@@ -50,9 +50,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class WebFragment extends Fragment implements TabInterface {
+public class IndoorMapFragment extends Fragment implements TabInterface {
 	// public static final String TITLE = "Badges";
-	public static final String TITLE = "InfoTrek's Location";
+	public static final String TITLE = "  InfoTrek's Location";
 	private WebView mWebView;
 	private boolean mIsWebViewAvailable;
 
@@ -149,6 +149,6 @@ public class WebFragment extends Fragment implements TabInterface {
 
 	@Override
 	public String printTitle() {
-		return WebFragment.TITLE;
+		return IndoorMapFragment.TITLE;
 	}
 }

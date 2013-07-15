@@ -34,10 +34,11 @@ import com.barcamppenang2013.MainActivity;
 import com.barcamppenang2013.R;
 
 public class HomeFragment extends Fragment implements TabInterface {
-	public static final String TITLE = "Home";
+	public static final String TITLE = "  Home";
 	private TextView mTextViewDay, mTextViewHour;
 	private Button mImageViewClickMe;
-
+	private ScrollView scrollView;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,7 +56,12 @@ public class HomeFragment extends Fragment implements TabInterface {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		ScrollView scrollView = (ScrollView) inflater.inflate(
+		if (scrollView != null ){
+	        ViewGroup parent = (ViewGroup) scrollView.getParent();
+	        if (parent != null)
+	            parent.removeView(scrollView);
+		}
+		scrollView = (ScrollView) inflater.inflate(
 				R.layout.home_layout, container, false);
 		LinearLayout linearLayout = (LinearLayout) scrollView
 				.findViewById(R.id.home_linear_layout);

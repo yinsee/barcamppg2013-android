@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.barcamppenang2013.CustomAdapter;
 import com.barcamppenang2013.FriendObject;
@@ -42,7 +43,7 @@ import com.google.analytics.tracking.android.Tracker;
 
 public class FriendListFragment extends SherlockFragment implements
 		TabInterface {
-	public static final String TITLE = "FriendList";
+	public static final String TITLE = "  Friends";
 	private ListView friendlist;	
 	private Button bt_scan;
 	private EditText search;
@@ -110,7 +111,13 @@ public class FriendListFragment extends SherlockFragment implements
 			}
 		}
 	}
-
+	@Override
+	public void onResume() {
+		super.onResume();
+		ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+		actionBar.setTitle(TITLE);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+	}
 	// Get the data from database and repopulate the listview.
 	public void updateListView() {
 

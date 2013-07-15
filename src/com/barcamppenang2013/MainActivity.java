@@ -22,6 +22,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,15 +54,21 @@ public class MainActivity extends SherlockFragmentActivity {
 	private Fragment fragment;
 	// private String mUrlAgenda =
 	// "https://docs.google.com/spreadsheet/pub?key=0AhLn4HpbOY9JdEJqVTBFNU5MaHdHMGRuMDFIcEVxX3c&output=html";
-	private String mUrlAgenda = "http://barcamppenang.org/schedule/";
+//	private String mUrlAgenda = "http://barcamppenang.org/schedule/";
+	private String mUrlAgenda = "http://barcamppenang.org/agenda.html";
+
 	private String mUrlSponsor = "http://barcamppenang.org/partners-sponsors/";
 	private final static int REFRESH_MENU_ID = 0x1234;
 	private FragmentTabHost mTabHost;
-	private final static String INFO_TAB = "Info";
-	private final static String PROFILE_TAB = "Profile";
-	private final static String AGENDA_TAB = "Agenda";
-	private final static String FRIENDS_TAB = "Friends";
-	private Bundle friendBundle= new Bundle();
+	private final static String INFO_TAB = "  Home";
+	private final static String PROFILE_TAB = "  Profile";
+	private final static String AGENDA_TAB = "  Agenda";
+	private final static String FRIENDS_TAB = "  Friends";
+	private HomeFragment homeFragment;
+	private ProfileFragment profileFragment;
+	private AgendaFragment agendaFragment;
+	private FriendListFragment friendListFragment;
+	private Bundle friendBundle = new Bundle();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,47 +83,61 @@ public class MainActivity extends SherlockFragmentActivity {
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
+		BitmapDrawable bg = (BitmapDrawable)getResources().getDrawable(R.drawable.bg_striped);
+		bg.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
+		getSupportActionBar().setBackgroundDrawable(bg);
+		
+		BitmapDrawable bgSplit = (BitmapDrawable)getResources().getDrawable(R.drawable.bg_striped_split_img);
+		bgSplit.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
+		getSupportActionBar().setSplitBackgroundDrawable(bgSplit);
 		// float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
 		// getResources().getDisplayMetrics());
 		// mTabHost.getTabWidget().getChildAt(0).getLayoutParams().width =
 		// (int)px;
-//		Drawable backgroundDrawable = getResources().getDrawable(
-//				R.drawable.tab_info_layout);
-//		ScaleDrawable scaleDrawable = new ScaleDrawable(backgroundDrawable,
-//				Gravity.CENTER, 50f,50f );
-//		mTabHost.addTab(
-//				mTabHost.newTabSpec(HOME_TAB).setIndicator("",scaleDrawable),
-//				HomeFragment.class, null);
-		//Info Tab
+		// Drawable backgroundDrawable = getResources().getDrawable(
+		// R.drawable.tab_info_layout);
+		// ScaleDrawable scaleDrawable = new ScaleDrawable(backgroundDrawable,
+		// Gravity.CENTER, 50f,50f );
+		// mTabHost.addTab(
+		// mTabHost.newTabSpec(HOME_TAB).setIndicator("",scaleDrawable),
+		// HomeFragment.class, null);
+		// Info Tab
 		ImageView imageView1 = new ImageView(this);
 		imageView1.setImageResource(R.drawable.tab_info_front);
 		imageView1.setBackgroundResource(R.drawable.tab_info_back);
-		
+
 		Display display = getWindowManager().getDefaultDisplay();
 		int width = display.getWidth();
-		imageView1.setLayoutParams(new LinearLayout.LayoutParams((width/4),100));
-		mTabHost.addTab(mTabHost.newTabSpec(INFO_TAB).setIndicator(imageView1),HomeFragment.class, null);
-//		mTabHost.addTab(mTabHost.newTabSpec(HOME_TAB).setIndicator("caicaiz"),HomeFragment.class, null);
-		
-		//Profile Tab
+		imageView1.setLayoutParams(new LinearLayout.LayoutParams((width / 4),
+				100));
+		mTabHost.addTab(mTabHost.newTabSpec(INFO_TAB).setIndicator(imageView1),
+				HomeFragment.class, null);
+		// mTabHost.addTab(mTabHost.newTabSpec(HOME_TAB).setIndicator("caicaiz"),HomeFragment.class,
+		// null);
+
+		// Profile Tab
 		ImageView imageView2 = new ImageView(this);
 		imageView2.setImageResource(R.drawable.tab_profile_front);
 		imageView2.setBackgroundResource(R.drawable.tab_profile_back);
-		mTabHost.addTab(mTabHost.newTabSpec(PROFILE_TAB).setIndicator(imageView2),ProfileFragment.class, null);
-		
-		//Agenda Tab
+		mTabHost.addTab(
+				mTabHost.newTabSpec(PROFILE_TAB).setIndicator(imageView2),
+				ProfileFragment.class, null);
+
+		// Agenda Tab
 		ImageView imageView3 = new ImageView(this);
 		imageView3.setImageResource(R.drawable.tab_agenda_front);
 		imageView3.setBackgroundResource(R.drawable.tab_agenda_back);
-		mTabHost.addTab(mTabHost.newTabSpec(AGENDA_TAB).setIndicator(imageView3),AgendaFragment.class, null);
-		
-		//Friends Tab
-		ImageView imageView4 = new ImageView(this); 
+		mTabHost.addTab(mTabHost.newTabSpec(AGENDA_TAB)
+				.setIndicator(imageView3), AgendaFragment.class, null);
+
+		// Friends Tab
+		ImageView imageView4 = new ImageView(this);
 		imageView4.setImageResource(R.drawable.tab_friends_front);
 		imageView4.setBackgroundResource(R.drawable.tab_friends_back);
-		mTabHost.addTab(mTabHost.newTabSpec(FRIENDS_TAB).setIndicator(imageView4),FriendListFragment.class, null);
-		
-		
+		mTabHost.addTab(
+				mTabHost.newTabSpec(FRIENDS_TAB).setIndicator(imageView4),
+				FriendListFragment.class, null);
+
 		mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 			@Override
 			public void onTabChanged(String tabId) {
@@ -123,17 +145,41 @@ public class MainActivity extends SherlockFragmentActivity {
 				actionBar.setTitle(tabId);
 				// Toast.makeText(getApplicationContext(), tabId,
 				// Toast.LENGTH_SHORT).show();
+				FragmentManager fm = getSupportFragmentManager();
+				fm.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				
+				for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+				    fm.popBackStack();
+				}
+				FragmentTransaction ft = getSupportFragmentManager()
+						.beginTransaction();
+
+				if (tabId.equalsIgnoreCase(INFO_TAB)) {
+					homeFragment = new HomeFragment();
+					ft.replace(R.id.realtabcontent, homeFragment);
+				} else if (tabId.equalsIgnoreCase(PROFILE_TAB)) {
+					profileFragment = new ProfileFragment();
+					ft.replace(R.id.realtabcontent, profileFragment);
+				} else if (tabId.equalsIgnoreCase(AGENDA_TAB)) {
+					agendaFragment = new AgendaFragment();
+					ft.replace(R.id.realtabcontent, agendaFragment);
+				} else if (tabId.equalsIgnoreCase(FRIENDS_TAB)) {
+					friendListFragment = new FriendListFragment();
+					ft.replace(R.id.realtabcontent, friendListFragment);
+				}
+				//ft.addToBackStack(null);
+				ft.commit();
 			}
 		});
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, REFRESH_MENU_ID, Menu.NONE, "Refresh")
-				.setIcon(R.drawable.ic_refresh_inverse)
-				.setShowAsAction(
-						MenuItem.SHOW_AS_ACTION_IF_ROOM
-								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+//		menu.add(Menu.NONE, REFRESH_MENU_ID, Menu.NONE, "Refresh")
+//				.setIcon(R.drawable.ic_refresh_inverse)
+//				.setShowAsAction(
+//						MenuItem.SHOW_AS_ACTION_IF_ROOM
+//								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -143,7 +189,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		// Respond to the action bar's Up/Home button
 		case android.R.id.home:
 			// NavUtils.navigateUpFromSameTask(this);
-			removeHomeFragment();
+			//removeHomeFragment();
 			FragmentManager fm = getSupportFragmentManager();
 			if (fm.getBackStackEntryCount() > 0) {
 				fm.popBackStack();
@@ -164,7 +210,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
+		//super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -179,43 +225,58 @@ public class MainActivity extends SherlockFragmentActivity {
 		FragmentManager fragment_manager = getSupportFragmentManager();
 		HomeFragment home_fragment = (HomeFragment) fragment_manager
 				.findFragmentByTag(INFO_TAB);
+		if (home_fragment != null){
+			if (home_fragment.isAdded()) {
+				fragment_manager.beginTransaction().remove(home_fragment).commit();
+			}
+		}
+	}
+	public void removeAllFragment() {
+		FragmentManager fragment_manager = getSupportFragmentManager();
+		HomeFragment home_fragment = (HomeFragment) fragment_manager
+				.findFragmentByTag(INFO_TAB);
 		if (home_fragment.isAdded()) {
 			fragment_manager.beginTransaction().remove(home_fragment).commit();
 		}
 	}
-
 	public void switchContent(Fragment fragment) {
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.realtabcontent, fragment).addToBackStack(null)
 				.commit();
+		Log.d("ddw","switch-ted");
 		updateActionBarTitle(fragment);
 	}
+
 	public void switchFragmentPassBundle(Fragment switchToFragment, String tag) {
 
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		//friendEditFrag = new FriendEditFragment();
+		// friendEditFrag = new FriendEditFragment();
 		switchToFragment.setArguments(friendBundle);
 		ft.replace(R.id.realtabcontent, switchToFragment);
-		ft.addToBackStack(tag);		
+		ft.addToBackStack(tag);
 		ft.commit();
 		displayBackStack(getSupportFragmentManager());
 	}
+
 	public static void displayBackStack(FragmentManager fm) {
 		int count = fm.getBackStackEntryCount();
-		Log.d("Backstack log",  count + " backstack");
+		Log.d("Backstack log", count + " backstack");
 		for (int i = 0; i < count; i++) {
 			// Display Backstack-entry data like
 			String name = fm.getBackStackEntryAt(i).getName();
 			Log.d("Backstack log", "backstack " + i + ": " + name);
 		}
 	}
+
 	public void updateActionBarTitle(Fragment fragment) {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle(((TabInterface) fragment).printTitle());
 		// actionBar.setIcon(R.drawable.ic_action_github);
 	}
-	public void setBundle(String id, String name,String email, String phone, String profession, String fbId){
-		//friendBundle = new Bundle();
+
+	public void setBundle(String id, String name, String email, String phone,
+			String profession, String fbId) {
+		// friendBundle = new Bundle();
 		friendBundle.putString("id", id);
 		friendBundle.putString("name", name);
 		friendBundle.putString("profession", profession);
@@ -223,6 +284,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		friendBundle.putString("email", email);
 		friendBundle.putString("fbId", fbId);
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();

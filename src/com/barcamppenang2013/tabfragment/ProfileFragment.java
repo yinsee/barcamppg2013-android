@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.barcamppenang2013.MainActivity;
 import com.barcamppenang2013.MyDatabase;
@@ -54,7 +55,7 @@ public class ProfileFragment extends SherlockFragment implements TabInterface {
 	private EditText et_profession;
 	private EditText et_fbId;
 	private String isProfileCreated;
-	public static final String TITLE = "Profile";
+	public static final String TITLE = "  Profile";
 	// Google Analytics
 	private Tracker GaTracker;
 	private GoogleAnalytics GaInstance;
@@ -69,7 +70,13 @@ public class ProfileFragment extends SherlockFragment implements TabInterface {
 		GaTracker = GaInstance.getTracker("UA-35359053-9");
 		GaTracker.sendView("TITLE");
 	}
-
+	@Override
+	public void onResume() {
+		super.onResume();
+		ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+		actionBar.setTitle(TITLE);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

@@ -24,7 +24,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 
 public class ProfileQrFragment extends Fragment implements TabInterface {
-	public static final String TITLE = "ProfileQr";
+	public static final String TITLE = "  ProfileQr";
 	private ImageView img_myqr;
 	private Button btn_edit;
 	// Google Analytics

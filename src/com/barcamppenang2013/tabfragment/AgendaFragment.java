@@ -18,24 +18,13 @@ package com.barcamppenang2013.tabfragment;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
-import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -48,11 +37,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.barcamppenang2013.MainActivity;
+
 public class AgendaFragment extends Fragment implements TabInterface {
 	// public static final String TITLE = "Badges";
-	public static final String TITLE = "New Agenda";
+	public static final String TITLE = "  Agenda";
 	private WebView mWebView;
 	private boolean mIsWebViewAvailable;
+
 	// real one
 	// private String mUrl =
 	// "https://docs.google.com/spreadsheet/pub?key=0Ah8I5GkmGav8dEZlT0JxclpiMTJJMVpnUE9lSGoyUVE&output=html";
@@ -88,15 +81,32 @@ public class AgendaFragment extends Fragment implements TabInterface {
 		// mUrl = "file:///android_asset/agenda/about.html";
 		// mUrl = this.getActivity().getFilesDir()+"/agenda.html";
 		// mUrl = "file:///data/about.html";
-		// mWebView.loadUrl(mUrl);
-
+//		 mWebView.loadUrl("http://barcamppenang.org/agenda.html");
+//		 mWebView.loadUrl("http://barcamppenang.org/schedule/");
+		 
 		mWebView.loadData(readFromFile("agenda.html"), "text/html", "utf-8");
 
 		// Log.d("ddw", "outside!!");
 		mIsWebViewAvailable = true;
 		WebSettings settings = mWebView.getSettings();
 		settings.setJavaScriptEnabled(true);
+//		if (isNetworkAvailable() == true){
+//			settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+//		}
+//		else{
+//			settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+//		}
 		return mWebView;
+	}
+
+	private boolean isNetworkAvailable() {
+		ConnectivityManager connectivityManager
+
+		= (ConnectivityManager) ((MainActivity) getActivity())
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null;
 	}
 
 	/**
@@ -105,13 +115,13 @@ public class AgendaFragment extends Fragment implements TabInterface {
 	 * 
 	 * @param url
 	 */
-//	public void loadUrl(String url) {
-//		if (mIsWebViewAvailable)
-//			getWebView().loadUrl(mUrl = url);
-//		else
-//			Log.w("ImprovedWebViewFragment",
-//					"WebView cannot be found. Check the view and fragment have been loaded.");
-//	}
+	// public void loadUrl(String url) {
+	// if (mIsWebViewAvailable)
+	// getWebView().loadUrl(mUrl = url);
+	// else
+	// Log.w("ImprovedWebViewFragment",
+	// "WebView cannot be found. Check the view and fragment have been loaded.");
+	// }
 
 	/**
 	 * Called when the fragment is visible to the user and actively running.
@@ -121,6 +131,7 @@ public class AgendaFragment extends Fragment implements TabInterface {
 	public void onPause() {
 		super.onPause();
 		mWebView.onPause();
+
 	}
 
 	/**
@@ -130,6 +141,10 @@ public class AgendaFragment extends Fragment implements TabInterface {
 	public void onResume() {
 		mWebView.onResume();
 		super.onResume();
+		ActionBar actionBar = ((MainActivity) getActivity())
+				.getSupportActionBar();
+		actionBar.setTitle(TITLE);
+		actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 
 	/**
@@ -175,8 +190,6 @@ public class AgendaFragment extends Fragment implements TabInterface {
 	public String printTitle() {
 		return AgendaFragment.TITLE;
 	}
-
-
 
 	private String readFromFile(String fileName) {
 

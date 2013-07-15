@@ -36,7 +36,7 @@ public class FriendPageFragment extends Fragment implements TabInterface {
 	private Button bt_email;
 	private Button bt_call;
 	private Button bt_sms;
-	private Button bt_edit;
+	private ImageView bt_edit;
 	private Button bt_fb;
 	private ImageView img;
 	private TextView tv_name;
@@ -78,7 +78,7 @@ public class FriendPageFragment extends Fragment implements TabInterface {
 		bt_email = (Button) v.findViewById(R.id.btEmail);
 		bt_call = (Button) v.findViewById(R.id.btCall);
 		bt_sms = (Button) v.findViewById(R.id.btSms);
-		bt_edit = (Button) v.findViewById(R.id.btEdit);
+		bt_edit = (ImageView) v.findViewById(R.id.btEdit);
 		bt_fb = (Button) v.findViewById(R.id.btFb);
 		tv_name = (TextView) v.findViewById(R.id.tvName);
 		tv_profession = (TextView) v.findViewById(R.id.tvProfession);

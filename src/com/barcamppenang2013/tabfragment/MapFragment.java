@@ -39,7 +39,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment implements TabInterface {
-	public static final String TITLE = "Map";
+	public static final String TITLE = "  Map";
 	private static View view;
 	private GoogleMap mMap;
 	public static final LatLng QUEENSBAY = new LatLng(5.33292, 100.3066);
@@ -83,7 +83,7 @@ public class MapFragment extends Fragment implements TabInterface {
 					if (getActivity() == null)
 						return;
 					MainActivity fca = (MainActivity) getActivity();
-						fca.switchContent(new WebFragment());
+						fca.switchContent(new IndoorMapFragment());
 //					Intent intent = new Intent();                   
 //					intent.setAction(Intent.ACTION_VIEW);
 //					Uri hacked_uri = Uri.parse("file://" + Uri.parse("android.resource://com.barcamppenang2013/"+R.drawable.ic_launcher).getPath());

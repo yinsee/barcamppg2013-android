@@ -43,13 +43,22 @@
                         android:src="@drawable/defaultpic" />
                 </LinearLayout>
 
-                <Button
+                <ImageView
                     android:id="@+id/btEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@layout/selector_btn_next" />
+                    android:src="@drawable/btn_next" />
+                <!--
+                     <Button
+                    android:id="@+id/btEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@layout/selector_btn_next" />
+                -->
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -89,8 +98,8 @@
 
                     <Button
                         android:id="@+id/btEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
                         android:layout_marginRight="10dip"
                         android:background="@layout/selector_btn_email" />
 
@@ -110,8 +119,8 @@
 
                     <Button
                         android:id="@+id/btCall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
                         android:layout_marginRight="10dip"
                         android:background="@layout/selector_btn_call" />
 
@@ -131,8 +140,8 @@
 
                     <Button
                         android:id="@+id/btSms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
                         android:layout_marginRight="10dip"
                         android:background="@layout/selector_btn_sms" />
 
@@ -152,8 +161,8 @@
 
                     <Button
                         android:id="@+id/btFb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
                         android:layout_marginRight="10dip"
                         android:background="@layout/selector_btn_facebook" />
 
