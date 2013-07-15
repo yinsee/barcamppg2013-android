@@ -12,9 +12,18 @@
         -->
     </style>
 
+    <color name="white_opaque">#FFFFFFFF</color>
+    <color name="pitch_black">#FF000000</color>
+    
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
 
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:background">@color/white_opaque</item>
+        <item name="android:windowBackground">@color/white_opaque</item>
+        <item name="android:colorBackground">@color/white_opaque</item>
+    </style>
+<!--      <style name="Theme.Styled.ActionBar.TitleTextStyle" parent="Theme.Sherlock.Light">
+        <item name="actionMenuTextColor">@color/white_opaque</item>
+    </style> -->
 </resources>

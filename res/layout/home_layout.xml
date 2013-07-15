@@ -1,7 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/text_friend"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center_vertical|center_horizontal"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/home_string"/>
+    <!-- android:background="#FFFFFF" -->
+
+
+    <!--
+         <FrameLayout
+        android:id="@+id/home_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    -->
+
+    <LinearLayout
+        android:id="@+id/home_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFFFF"
+        android:orientation="vertical" >
+
+        <!--
+             <ImageView
+            android:id="@+id/home_barcamp_logo"
+            android:layout_width="match_parent"
+            android:layout_height="240px"
+            android:adjustViewBounds="true"
+            android:background="@drawable/colorful"
+            android:scaleType="centerCrop" />
+        -->
+
+        <ImageView
+            android:id="@+id/home_barcamp_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:gravity="center"
+            android:scaleType="fitStart"
+            android:src="@drawable/colorful3" />
+
+        <ImageView
+            android:id="@+id/home_barcamp_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dip"
+            android:layout_marginRight="70dip"
+            android:adjustViewBounds="true"
+            android:src="@drawable/barcamp_header" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="50dip"
+            android:layout_marginRight="50dip"
+            android:layout_marginTop="20dip"
+            android:background="#000000" />
+
+        <!--
+             <TextView
+            android:id="@+id/countdown_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:text="countdown"
+            android:textColor="#06327f"
+            android:textSize="25sp"
+            android:textStyle="" />
+        -->
+
+        <LinearLayout
+            android:id="@+id/date_time_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/count_down_day"
+                android:layout_width="90dip"
+                android:layout_height="83dip"
+                android:background="@drawable/blue_circle_days1"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="0"
+                android:textSize="40dip" />
+
+            <TextView
+                android:id="@+id/count_down_hour"
+                android:layout_width="200dip"
+                android:layout_height="92dip"
+                android:background="@drawable/blue_circle_hours4"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="0"
+                android:textScaleX="0.9"
+                android:textSize="40dip" />
+        </LinearLayout>
+        <!--
+             <ImageView
+            android:id="@+id/home_barcamp_logo"
+            android:layout_width="120dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="50dip"
+            android:adjustViewBounds="true"
+            android:src="@drawable/countdown1" />
+        -->
+        <!--
+             <TextView
+            android:id="@+id/countdown_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="50dip"
+            android:text="COUNTDOWN"
+            android:textSize="30dip" />
+        -->
+
+
+        <!--
+             <LinearLayout
+            android:id="@+id/date_time_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="DAYS"
+                android:textSize="30dip" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100dip"
+                android:layout_marginLeft="50dip"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="HOURS"
+                android:textSize="30dip" />
+        </LinearLayout>
+        -->
+
+
+        <!--
+                  <ImageView
+            android:id="@+id/home_barcamp_logo"
+            android:layout_width="68dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="50dip"
+            android:adjustViewBounds="true"
+            android:src="@drawable/venue" />
+        -->
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="50dip"
+            android:layout_marginRight="50dip"
+            android:layout_marginTop="20dip"
+            android:background="#000000" />
+
+        <!--
+             <TextView
+            android:id="@+id/venue_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:text="venue"
+            android:textColor="#06327f"
+            android:textSize="25sp"
+            android:textStyle="" />
+        -->
+
+
+        <!--
+                  <ImageView
+            android:id="@+id/infotrek_imageview"
+            android:layout_width="100dip"
+            android:layout_height="59dip"
+            android:adjustViewBounds="true"
+            android:gravity="center"
+            android:src="@drawable/info_trek_text"
+            android:scaleType="fitStart" />
+        -->
+
+        <TextView
+            android:id="@+id/infotrek_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dip"
+            android:gravity="center_horizontal"
+            android:text="InfoTrek"
+            android:textColor="#000000"
+            android:textSize="30dip"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/qb_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dip"
+            android:gravity="center_horizontal"
+            android:text="Queensbay Mall Penang"
+            android:typeface="monospace"
+            android:textColor="#000000"
+            android:textSize="13dip" />
+
+        <!--
+             <TextView
+            android:id="@+id/penang_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dip"
+            android:text="Penang"
+            android:textColor="#000000"
+            android:textSize="15dip" />
+        -->
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="#000000"
+            android:padding="1dip" >
+
+            <fragment
+                android:layout_width="wrap_content"
+                android:layout_height="180dip"
+                class="com.barcamppenang2013.tabfragment.MapFragment" />
+
+            <Button
+                android:id="@+id/map_fullscreen_button"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_gravity="right|bottom"
+                android:adjustViewBounds="true"
+                android:background="@drawable/fullscreen_icon"
+                android:gravity="" />
+        </FrameLayout>
+
+        <!--
+             <TextView
+            android:id="@+id/sponsor_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginTop="50dip"
+            android:text="PLATINUM SPONSORS"
+            android:textColor="#06327f"
+            android:textSize="17dip"
+            android:textStyle="bold|italic" /> 
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="50dip"
+            android:background="#8c8c8c" />
+
+        
+             <ImageView
+            android:id="@+id/sponsor_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:gravity="center"
+            android:scaleType="fitStart" />
+        -->
+
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            class="com.barcamppenang2013.tabfragment.SponsorFragment" />
+
+        <!-- </FrameLayout> -->
+
+    </LinearLayout>
+
+</ScrollView><!--
+android:textAppearance="?android:attr/textAppearanceMedium"
+android:layout_marginLeft="50dip"
+android:layout_marginRight="50dip"
+android:background="#FFFFFFFF"
+android:textScaleX="0.9"
+-->
