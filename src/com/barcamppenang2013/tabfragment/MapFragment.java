@@ -55,8 +55,8 @@ public class MapFragment extends Fragment implements TabInterface {
 	@Override
 	public void onResume(){
 		super.onResume();
-		ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
-		actionBar.setTitle(TITLE);
+//		ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+//		actionBar.setTitle(TITLE);
 	}
 	
 	@Override

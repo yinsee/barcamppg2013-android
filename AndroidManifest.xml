@@ -53,6 +53,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".HelpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        </activity>
+        <activity
             android:name="com.google.zxing.client.android.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="Scan QRCode"

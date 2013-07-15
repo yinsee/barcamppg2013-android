@@ -19,6 +19,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -54,11 +55,12 @@ public class MainActivity extends SherlockFragmentActivity {
 	private Fragment fragment;
 	// private String mUrlAgenda =
 	// "https://docs.google.com/spreadsheet/pub?key=0AhLn4HpbOY9JdEJqVTBFNU5MaHdHMGRuMDFIcEVxX3c&output=html";
-//	private String mUrlAgenda = "http://barcamppenang.org/schedule/";
+	// private String mUrlAgenda = "http://barcamppenang.org/schedule/";
 	private String mUrlAgenda = "http://barcamppenang.org/agenda.html";
 
 	private String mUrlSponsor = "http://barcamppenang.org/partners-sponsors/";
 	private final static int REFRESH_MENU_ID = 0x1234;
+	private final static int HELP_MENU_ID = 0x1235;
 	private FragmentTabHost mTabHost;
 	private final static String INFO_TAB = "  Home";
 	private final static String PROFILE_TAB = "  Profile";
@@ -83,11 +85,13 @@ public class MainActivity extends SherlockFragmentActivity {
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-		BitmapDrawable bg = (BitmapDrawable)getResources().getDrawable(R.drawable.bg_striped);
+		BitmapDrawable bg = (BitmapDrawable) getResources().getDrawable(
+				R.drawable.bg_striped);
 		bg.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
 		getSupportActionBar().setBackgroundDrawable(bg);
-		
-		BitmapDrawable bgSplit = (BitmapDrawable)getResources().getDrawable(R.drawable.bg_striped_split_img);
+
+		BitmapDrawable bgSplit = (BitmapDrawable) getResources().getDrawable(
+				R.drawable.bg_striped_split_img);
 		bgSplit.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
 		getSupportActionBar().setSplitBackgroundDrawable(bgSplit);
 		// float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
@@ -146,10 +150,10 @@ public class MainActivity extends SherlockFragmentActivity {
 				// Toast.makeText(getApplicationContext(), tabId,
 				// Toast.LENGTH_SHORT).show();
 				FragmentManager fm = getSupportFragmentManager();
-				fm.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
-				
-				for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-				    fm.popBackStack();
+				fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+				for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+					fm.popBackStack();
 				}
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
@@ -167,7 +171,7 @@ public class MainActivity extends SherlockFragmentActivity {
 					friendListFragment = new FriendListFragment();
 					ft.replace(R.id.realtabcontent, friendListFragment);
 				}
-				//ft.addToBackStack(null);
+				// ft.addToBackStack(null);
 				ft.commit();
 			}
 		});
@@ -175,11 +179,16 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//		menu.add(Menu.NONE, REFRESH_MENU_ID, Menu.NONE, "Refresh")
-//				.setIcon(R.drawable.ic_refresh_inverse)
-//				.setShowAsAction(
-//						MenuItem.SHOW_AS_ACTION_IF_ROOM
-//								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		// menu.add(Menu.NONE, REFRESH_MENU_ID, Menu.NONE, "Refresh")
+		// .setIcon(R.drawable.ic_refresh_inverse)
+		// .setShowAsAction(
+		// MenuItem.SHOW_AS_ACTION_IF_ROOM
+		// | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		menu.add(Menu.NONE, HELP_MENU_ID, Menu.NONE, "Refresh")
+				.setIcon(android.R.drawable.ic_menu_info_details)
+				.setShowAsAction(
+						MenuItem.SHOW_AS_ACTION_IF_ROOM
+								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -189,13 +198,16 @@ public class MainActivity extends SherlockFragmentActivity {
 		// Respond to the action bar's Up/Home button
 		case android.R.id.home:
 			// NavUtils.navigateUpFromSameTask(this);
-			//removeHomeFragment();
+			// removeHomeFragment();
 			FragmentManager fm = getSupportFragmentManager();
 			if (fm.getBackStackEntryCount() > 0) {
 				fm.popBackStack();
 			}
 			return true;
-
+		case HELP_MENU_ID:
+			Intent intent = new Intent(this, HelpActivity.class);
+			startActivity(intent);
+			return true;
 		case REFRESH_MENU_ID:
 			(new Downloader(this, "agenda.html")).execute(mUrlAgenda);
 			(new Downloader(this, "sponsor.html")).execute(mUrlSponsor);
@@ -210,7 +222,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		//super.onSaveInstanceState(outState);
+		// super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -225,12 +237,14 @@ public class MainActivity extends SherlockFragmentActivity {
 		FragmentManager fragment_manager = getSupportFragmentManager();
 		HomeFragment home_fragment = (HomeFragment) fragment_manager
 				.findFragmentByTag(INFO_TAB);
-		if (home_fragment != null){
+		if (home_fragment != null) {
 			if (home_fragment.isAdded()) {
-				fragment_manager.beginTransaction().remove(home_fragment).commit();
+				fragment_manager.beginTransaction().remove(home_fragment)
+						.commit();
 			}
 		}
 	}
+
 	public void removeAllFragment() {
 		FragmentManager fragment_manager = getSupportFragmentManager();
 		HomeFragment home_fragment = (HomeFragment) fragment_manager
@@ -239,11 +253,12 @@ public class MainActivity extends SherlockFragmentActivity {
 			fragment_manager.beginTransaction().remove(home_fragment).commit();
 		}
 	}
+
 	public void switchContent(Fragment fragment) {
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.realtabcontent, fragment).addToBackStack(null)
 				.commit();
-		Log.d("ddw","switch-ted");
+		Log.d("ddw", "switch-ted");
 		updateActionBarTitle(fragment);
 	}
 
