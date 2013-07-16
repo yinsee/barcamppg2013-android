@@ -8,6 +8,7 @@
     <string name="dummy_string"> Please Fill Up This Page! :)</string>
     <string name="github_label">SlidingMenu on GitHub</string>
     <string name="github">GitHub</string>
+    <string name="app_id">347843425344720</string>
     <string name="changing_fragments">Changing Fragments</string>
-    
+
 </resources>

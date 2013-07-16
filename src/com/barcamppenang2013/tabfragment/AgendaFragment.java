@@ -16,58 +16,209 @@
 
 package com.barcamppenang2013.tabfragment;
 
-import com.barcamppenang2013.R;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.barcamppenang2013.MainActivity;
 
-    public class AgendaFragment extends ListFragment implements TabInterface {
-    	public static final String TITLE = "Agenda";
-    	
-//        @Override
-//        public void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                Bundle savedInstanceState) {
-//            View v = inflater.inflate(R.layout.friend_page, container, false);
-//            return v;
-//        }
-    	  public void onActivityCreated(Bundle savedInstanceState) {
-    		    super.onActivityCreated(savedInstanceState);
-    		    String[] values = new String[] {
-    		    		"08:30 - slot1", 
-    		    		"09:30 - slot2",
-    		    		"10:30 - slot3",
-    		    		"11:30 - slot4", 
-    		    		"12:30 - lunch break", 
-    		    		"14:30 - slot5",
-    		    		"15:30 - slot6", 
-    		    		"16:30 - slot7", 
-    		    		"17:30 - slot8",
-    		    	};
-    		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-    		        android.R.layout.simple_list_item_1, values);
-    		    setListAdapter(adapter);
-    		  }
+public class AgendaFragment extends Fragment implements TabInterface {
+	// public static final String TITLE = "Badges";
+	public static final String TITLE = "  Agenda";
+	private WebView mWebView;
+	private boolean mIsWebViewAvailable;
 
-    		  @Override
-    		  public void onListItemClick(ListView l, View v, int position, long id) {
-    		    // Do something with the data
-    			  this.getActivity().getSupportFragmentManager()
-    				.beginTransaction()
-    				.replace(R.id.content_frame, new AgendaDetailFragment())
-    				.addToBackStack( "tag" )
-    				.commit();
-    		  }
-        @Override
-        public String printTitle(){
-        	return AgendaFragment.TITLE;
-        }
-    }
+	// real one
+	// private String mUrl =
+	// "https://docs.google.com/spreadsheet/pub?key=0Ah8I5GkmGav8dEZlT0JxclpiMTJJMVpnUE9lSGoyUVE&output=html";
+
+	// a duplicate for testing
+
+	/**
+	 * Called to instantiate the view. Creates and returns the WebView.
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		if (mWebView != null) {
+			mWebView.destroy();
+		}
+		mWebView = new WebView(getActivity());
+		mWebView.setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+					mWebView.goBack();
+					return true;
+				}
+				return false;
+			}
+
+		});
+		mWebView.setWebViewClient(new InnerWebViewClient()); // forces it to
+																// open in app
+
+		// mUrl = "file:///android_asset/agenda/about.html";
+		// mUrl = this.getActivity().getFilesDir()+"/agenda.html";
+		// mUrl = "file:///data/about.html";
+//		 mWebView.loadUrl("http://barcamppenang.org/agenda.html");
+//		 mWebView.loadUrl("http://barcamppenang.org/schedule/");
+		 
+		mWebView.loadData(readFromFile("agenda.html"), "text/html", "utf-8");
+
+		// Log.d("ddw", "outside!!");
+		mIsWebViewAvailable = true;
+		WebSettings settings = mWebView.getSettings();
+		settings.setJavaScriptEnabled(true);
+//		if (isNetworkAvailable() == true){
+//			settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+//		}
+//		else{
+//			settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+//		}
+		return mWebView;
+	}
+
+	private boolean isNetworkAvailable() {
+		ConnectivityManager connectivityManager
+
+		= (ConnectivityManager) ((MainActivity) getActivity())
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null;
+	}
+
+	/**
+	 * Convenience method for loading a url. Will fail if {@link View} is not
+	 * initialised (but won't throw an {@link Exception})
+	 * 
+	 * @param url
+	 */
+	// public void loadUrl(String url) {
+	// if (mIsWebViewAvailable)
+	// getWebView().loadUrl(mUrl = url);
+	// else
+	// Log.w("ImprovedWebViewFragment",
+	// "WebView cannot be found. Check the view and fragment have been loaded.");
+	// }
+
+	/**
+	 * Called when the fragment is visible to the user and actively running.
+	 * Resumes the WebView.
+	 */
+	@Override
+	public void onPause() {
+		super.onPause();
+		mWebView.onPause();
+
+	}
+
+	/**
+	 * Called when the fragment is no longer resumed. Pauses the WebView.
+	 */
+	@Override
+	public void onResume() {
+		mWebView.onResume();
+		super.onResume();
+		ActionBar actionBar = ((MainActivity) getActivity())
+				.getSupportActionBar();
+		actionBar.setTitle(TITLE);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+	}
+
+	/**
+	 * Called when the WebView has been detached from the fragment. The WebView
+	 * is no longer available after this time.
+	 */
+	@Override
+	public void onDestroyView() {
+		mIsWebViewAvailable = false;
+		super.onDestroyView();
+	}
+
+	/**
+	 * Called when the fragment is no longer in use. Destroys the internal state
+	 * of the WebView.
+	 */
+	@Override
+	public void onDestroy() {
+		if (mWebView != null) {
+			mWebView.destroy();
+			mWebView = null;
+		}
+		super.onDestroy();
+	}
+
+	/**
+	 * Gets the WebView.
+	 */
+	public WebView getWebView() {
+		return mIsWebViewAvailable ? mWebView : null;
+	}
+
+	/* To ensure links open within the application */
+	private class InnerWebViewClient extends WebViewClient {
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			view.loadUrl(url);
+			return true;
+		}
+	}
+
+	@Override
+	public String printTitle() {
+		return AgendaFragment.TITLE;
+	}
+
+	private String readFromFile(String fileName) {
+
+		String ret = "";
+
+		try {
+			InputStream inputStream = this.getActivity()
+					.openFileInput(fileName);
+
+			if (inputStream != null) {
+				InputStreamReader inputStreamReader = new InputStreamReader(
+						inputStream);
+				BufferedReader bufferedReader = new BufferedReader(
+						inputStreamReader);
+				String receiveString = "";
+				StringBuilder stringBuilder = new StringBuilder();
+
+				while ((receiveString = bufferedReader.readLine()) != null) {
+					stringBuilder.append(receiveString);
+				}
+
+				inputStream.close();
+				ret = stringBuilder.toString();
+			}
+		} catch (FileNotFoundException e) {
+			Log.e("login activity", "File not found: " + e.toString());
+		} catch (IOException e) {
+			Log.e("login activity", "Can not read file: " + e.toString());
+		}
+		return ret;
+	}
+}

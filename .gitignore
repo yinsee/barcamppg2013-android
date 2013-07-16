@@ -28,3 +28,4 @@ proguard-project.txt
 *.ipr
 *.iws
 .idea/
+.DS_Store
