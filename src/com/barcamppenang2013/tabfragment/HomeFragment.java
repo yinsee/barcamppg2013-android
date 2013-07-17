@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment implements TabInterface {
 			}
 		});
 		// mTextView.setBackgroundResource(R.drawable.info_countdown);
-		Date date = new Date(113, 6, 26); // 2013/July/26
+		Date date = new Date(113, 6, 27); // 2013/July/27
 		// year the year, 0 is 1900.
 		// month the month, 0 - 11.
 		// day the day of the month, 1 - 31.

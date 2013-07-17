@@ -171,7 +171,7 @@ public class MainActivity extends SherlockFragmentActivity {
 					friendListFragment = new FriendListFragment();
 					ft.replace(R.id.realtabcontent, friendListFragment);
 				}
-				// ft.addToBackStack(null);
+				ft.addToBackStack(null);
 				ft.commit();
 			}
 		});
@@ -184,7 +184,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		// .setShowAsAction(
 		// MenuItem.SHOW_AS_ACTION_IF_ROOM
 		// | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-		menu.add(Menu.NONE, HELP_MENU_ID, Menu.NONE, "Refresh")
+		menu.add(Menu.NONE, HELP_MENU_ID, Menu.NONE, "")
 				.setIcon(android.R.drawable.ic_menu_info_details)
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
