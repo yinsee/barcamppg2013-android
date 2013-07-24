@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -44,11 +45,11 @@ import com.google.analytics.tracking.android.Tracker;
 public class FriendListFragment extends SherlockFragment implements
 		TabInterface {
 	public static final String TITLE = "  Friends";
-	private ListView friendlist;	
+	private ListView friendlist;
 	private Button bt_scan;
 	private EditText search;
 	private ImageView img;
-	private CustomAdapter adapter;
+	private CustomAdapter adapter;	
 	// Google Analytics
 	private Tracker GaTracker;
 	private GoogleAnalytics GaInstance;
@@ -73,10 +74,13 @@ public class FriendListFragment extends SherlockFragment implements
 			}
 		});
 		
-		friendlist = (ListView) v.findViewById(R.id.list);
+		friendlist = (ListView) v.findViewById(R.id.list);			
+		
+		View header = View.inflate(getActivity(), R.layout.listview_header, null);
+		friendlist.addHeaderView(header);
 		search = (EditText) v.findViewById(R.id.etSearch);
-		img = (ImageView) v.findViewById(R.id.imgNoFriend);
-
+		img = (ImageView) v.findViewById(R.id.imgNoFriend);	
+		
 		updateListView();
 		bt_scan = (Button) v.findViewById(R.id.btnScan);
 		bt_scan.setOnClickListener(new OnClickListener() {
@@ -111,30 +115,33 @@ public class FriendListFragment extends SherlockFragment implements
 			}
 		}
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+		ActionBar actionBar = ((MainActivity) getActivity())
+				.getSupportActionBar();
 		actionBar.setTitle(TITLE);
 		actionBar.setDisplayHomeAsUpEnabled(false);
 	}
+
 	// Get the data from database and repopulate the listview.
 	public void updateListView() {
 
 		List<FriendObject> friendObjs = getFriendObjs();
 		if (friendObjs.size() == 0) {
 			img.setVisibility(View.VISIBLE);
-//			search.setVisibility(View.INVISIBLE);
+			// search.setVisibility(View.INVISIBLE);
 
 		} else {
 			img.setVisibility(View.GONE);
-//			search.setVisibility(View.VISIBLE);
+			// search.setVisibility(View.VISIBLE);
 		}
-//		img.setVisibility(View.GONE);
-//		search.setVisibility(View.VISIBLE);
+		// img.setVisibility(View.GONE);
+		// search.setVisibility(View.VISIBLE);
 		adapter = new CustomAdapter(friendObjs, getActivity());
-		
-		//friendlist.setSelector( R.drawable.selector_listview);
+
+		// friendlist.setSelector( R.drawable.selector_listview);
 		friendlist.setAdapter(adapter);
 
 		if (isNetworkAvailable()) {
@@ -201,12 +208,10 @@ public class FriendListFragment extends SherlockFragment implements
 
 				MainActivity main = (MainActivity) getActivity();
 				// Pass data to the next fragment
-				main.setBundle(objSelected.getId(),
-						objSelected.getName(), objSelected.getEmail(),
-						objSelected.getPhone(), objSelected.getProfession(),
-						objSelected.getFbId());				
-				main.switchFragmentPassBundle(new FriendPageFragment(),TITLE);
-				
+				main.setBundle(objSelected.getId(), objSelected.getName(),
+						objSelected.getEmail(), objSelected.getPhone(),
+						objSelected.getProfession(), objSelected.getFbId());
+				main.switchFragmentPassBundle(new FriendPageFragment(), TITLE);
 
 			}
 		});
@@ -267,8 +272,9 @@ public class FriendListFragment extends SherlockFragment implements
 		SQLiteDatabase sqliteDatabase = database.getReadableDatabase();
 		String sql = "SELECT * FROM MYFRIENDS;";
 		Cursor retrieved = sqliteDatabase.rawQuery(sql, null);
-		//Log.d("row of cursor", Integer.toString(retrieved.getCount()));
-		//Log.d("yc",	"row of friend cursor in database is "+ Integer.toString(retrieved.getCount()));
+		// Log.d("row of cursor", Integer.toString(retrieved.getCount()));
+		// Log.d("yc", "row of friend cursor in database is "+
+		// Integer.toString(retrieved.getCount()));
 
 		// If cursor is not null
 		while (retrieved.moveToNext()) {
@@ -276,7 +282,7 @@ public class FriendListFragment extends SherlockFragment implements
 			String id = retrieved.getString(retrieved
 					.getColumnIndex("FRIENDKEYID"));
 			String name = retrieved.getString(retrieved
-					.getColumnIndex("FRIENDNAME"));			
+					.getColumnIndex("FRIENDNAME"));
 			String email = retrieved.getString(retrieved
 					.getColumnIndex("FRIENDEMAIL"));
 			String phone = retrieved.getString(retrieved
@@ -293,7 +299,8 @@ public class FriendListFragment extends SherlockFragment implements
 			obj.setProfession(profession);
 			obj.setFbId(fbId);
 
-			//Log.d("getFriendObjs", name + " " + email + " " + phone + " "+ profession + " " + fbId);
+			// Log.d("getFriendObjs", name + " " + email + " " + phone + " "+
+			// profession + " " + fbId);
 			friendObjs.add(obj);
 
 		}

@@ -1,5 +1,7 @@
 package com.barcamppenang2013;
 
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,7 +23,15 @@ public class HelpActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		 ActionBar bar = this.getSupportActionBar();
 		 bar.setTitle("  How To Exchange Contacts");
+		 BitmapDrawable bg = (BitmapDrawable) getResources().getDrawable(
+				R.drawable.bg_striped);
+		 bg.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
+		 getSupportActionBar().setBackgroundDrawable(bg);
 
+		 BitmapDrawable bgSplit = (BitmapDrawable) getResources().getDrawable(
+				R.drawable.bg_striped_split_img);
+		 bgSplit.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
+		 getSupportActionBar().setSplitBackgroundDrawable(bgSplit);
 		 mWebView = new WebView(this);
 			mWebView.setOnKeyListener(new OnKeyListener() {
 

@@ -67,8 +67,8 @@
 
             <Button
                 android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="156dip"
+                android:layout_height="39dip"
                 android:layout_margin="10dip"
                 android:background="@layout/selector_btn_add_edit_profile" />
         </LinearLayout>
