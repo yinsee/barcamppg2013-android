@@ -32,8 +32,8 @@
 
         <Button
             android:id="@+id/btnScan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="87dip"
+            android:layout_height="65dip"
             android:layout_alignParentRight="true"
             android:background="@layout/selector_btn_scan" />
     </RelativeLayout>
