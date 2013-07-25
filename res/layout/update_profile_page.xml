@@ -78,15 +78,15 @@
 
             <ImageButton
                 android:id="@+id/btnfbconnect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="78dip"
+                android:layout_height="21dip"
                 android:layout_marginBottom="20dip"
                 android:background="@layout/selector_btnfacebookconnect" />
 
             <Button
                 android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="152dip"
+                android:layout_height="38dip"
                 android:layout_marginBottom="10dip"
                 android:background="@layout/selector_btnsave" />
         </LinearLayout>
